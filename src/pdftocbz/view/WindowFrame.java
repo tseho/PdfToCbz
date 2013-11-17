@@ -9,6 +9,9 @@ import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -278,8 +281,10 @@ public class WindowFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PdfToCbz Converter");
 
+        jSplitPane.setBorder(BorderFactory.createEmptyBorder());
         jSplitPane.setDividerSize(10);
         jSplitPane.setResizeWeight(0.8);
+        jSplitPane.setToolTipText("");
 
         driveComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         driveComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -660,12 +665,16 @@ public class WindowFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_driveComboBoxActionPerformed
 
     private void fileSelectedListKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fileSelectedListKeyReleased
+        // Key delete
         if (evt.getKeyCode() == 127) {
-            Object[] selectedFilesToRemove = this.fileSelectedList.getSelectedValues();
-            for (int i = 0; i < selectedFilesToRemove.length; i++) {
-                this.selectedFilesManager.removeElement((String) selectedFilesToRemove[i]);
+            List selectedFilesToRemove = this.fileSelectedList.getSelectedValuesList();
+            for (Iterator it = selectedFilesToRemove.iterator(); it.hasNext();) {
+                String selectedFileToRemove = (String) it.next();
+                this.selectedFilesManager.removeElement(selectedFileToRemove);
             }
+            this.fileSelectedList.clearSelection();
         }
+        
         this.updateSelectedList();
     }//GEN-LAST:event_fileSelectedListKeyReleased
 
