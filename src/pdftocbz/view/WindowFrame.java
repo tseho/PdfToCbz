@@ -57,8 +57,11 @@ public class WindowFrame extends javax.swing.JFrame {
         }
 
         this.fileSelectorJTree.setCellRenderer(new FileTreeRenderer());
+        
+        //ScrollPane fix
         this.fileSelectorJTree.setPreferredSize(null);
-
+        this.fileSelectedList.setPreferredSize(null);
+        
         this.setTreeFile(new FileSystemTreeModel((File) this.driveComboBox.getSelectedItem()));
         
         this.initializeSelectedList();
@@ -352,6 +355,8 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addComponent(removeFileButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        fileSelectedScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         fileSelectedList.setMaximumSize(new java.awt.Dimension(120, 200));
         fileSelectedList.setMinimumSize(new java.awt.Dimension(120, 200));
