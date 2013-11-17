@@ -1,0 +1,9 @@
+# Java
+*.class
+build/
+dist/
+exe/
+build.xml
+
+# IDE
+nbproject/
