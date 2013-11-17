@@ -51,15 +51,8 @@ public class MainController {
     }
     
     public void launchConverter(JProgressBar progressBar){
-        /*
-        this.converter = new Converter(this.appSettings);
-        converter.setSelectedFiles(this.filesManager.getSelectedFiles());
-        converter.setProgressBar(progressBar);
-        */
-        
         Converter converter = new Converter(appSettings, this.selectedFilesManager.getList(), progressBar, this.logs);
         converter.start();
-        
     }
     
     public AppSettings getAppSettings(){

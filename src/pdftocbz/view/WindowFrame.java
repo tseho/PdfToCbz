@@ -625,12 +625,10 @@ public class WindowFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void convertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertButtonActionPerformed
-        // TODO add your handling code here:
         this.updateSelectedList();
         this.updateSettings();
         
         if(this.selectedFilesManager.getList().size()>0){
-            
             this.controller.launchConverter(this.convertProgressBar);
             this.cancelButton.setVisible(true);
             this.progressPanel.setVisible(true);
