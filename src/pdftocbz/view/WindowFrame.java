@@ -54,6 +54,7 @@ public class WindowFrame extends javax.swing.JFrame {
         }
 
         this.fileSelectorJTree.setCellRenderer(new FileTreeRenderer());
+        this.fileSelectorJTree.setPreferredSize(null);
 
         this.setTreeFile(new FileSystemTreeModel((File) this.driveComboBox.getSelectedItem()));
         
@@ -287,6 +288,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
         });
 
+        fileSelectorJScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         fileSelectorJScrollPane.setMinimumSize(new java.awt.Dimension(80, 80));
         fileSelectorJScrollPane.setPreferredSize(new java.awt.Dimension(80, 322));
 
