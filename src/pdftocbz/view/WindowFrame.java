@@ -220,7 +220,7 @@ public class WindowFrame extends javax.swing.JFrame {
         this.cancelButton.setVisible(false);
         this.convertButton.setEnabled(true);
         this.loadingSpinner.setVisible(false);
-
+        this.numberPdfSelectedLabel.setText("0");
     }
 
     /**
@@ -655,7 +655,7 @@ public class WindowFrame extends javax.swing.JFrame {
         this.updateSettings();
 
         if (this.selectedFilesManager.getList().size() > 0) {
-            this.controller.launchConverter(this.convertProgressBar);
+            this.updateProgressing(0);
             this.cancelButton.setVisible(true);
             this.progressPanel.setVisible(true);
             this.loadingSpinner.setVisible(true);
@@ -665,6 +665,7 @@ public class WindowFrame extends javax.swing.JFrame {
             this.convertProgressBar.setMinimum(0);
             this.convertProgressBar.setValue(0);
             this.convertProgressBar.setMaximum(this.selectedFilesManager.getList().size());
+            this.controller.launchConverter(this.convertProgressBar);
         }
     }//GEN-LAST:event_convertButtonActionPerformed
 
