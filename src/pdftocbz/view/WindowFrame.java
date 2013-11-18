@@ -43,54 +43,52 @@ public class WindowFrame extends javax.swing.JFrame {
     }
 
     public void prepare() {
-        
+
         this.applySettings();
-        
+
         //this.deleteImagesAfterCheckBox.setSelected(false);
         //this.deleteImagesAfterCheckBox.setEnabled(false);
-        
         this.outputQualityComboBox.setEnabled(false);
-        
-        if(this.outputImagesRadio.isSelected()){
+
+        if (this.outputImagesRadio.isSelected()) {
             this.deleteImagesAfterCheckBox.setSelected(false);
             this.deleteImagesAfterCheckBox.setEnabled(false);
         }
 
         this.fileSelectorJTree.setCellRenderer(new FileTreeRenderer());
-        
+
         //ScrollPane fix
         this.fileSelectorJTree.setPreferredSize(null);
         this.fileSelectedList.setPreferredSize(null);
-        
+
         this.setTreeFile(new FileSystemTreeModel((File) this.driveComboBox.getSelectedItem()));
-        
+
         this.initializeSelectedList();
-        
+
         this.convertProgressBar.addPropertyChangeListener("value", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 //updateProgressing();
             }
         });
-        
+
         this.convertProgressBar.addPropertyChangeListener("endThread", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 convertIsFinish();
             }
         });
-        
+
         this.convertProgressBar.addPropertyChangeListener("pdfConverted", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 updateProgressing((Integer) evt.getNewValue());
             }
         });
-        
 
     }
-    
-    public void initializeSelectedList(){
+
+    public void initializeSelectedList() {
         this.fileSelectedList.setModel(new javax.swing.AbstractListModel() {
             @Override
             public int getSize() {
@@ -125,9 +123,9 @@ public class WindowFrame extends javax.swing.JFrame {
 
         //output quality
         this.outputQualityComboBox.setSelectedIndex(this.controller.getAppSettings().getQuality());
-        
+
         for (int i = 0; i < this.driveComboBox.getItemCount(); i++) {
-            if(this.driveComboBox.getItemAt(i).toString().equals(this.controller.getAppSettings().getLastDrive())){
+            if (this.driveComboBox.getItemAt(i).toString().equals(this.controller.getAppSettings().getLastDrive())) {
                 this.driveComboBox.setSelectedIndex(i);
                 break;
             }
@@ -150,7 +148,7 @@ public class WindowFrame extends javax.swing.JFrame {
 
         //output quality
         this.controller.getAppSettings().setQuality(this.outputQualityComboBox.getSelectedIndex());
-        
+
         //Drive selected
         this.controller.getAppSettings().setLastDrive(this.driveComboBox.getSelectedItem().toString());
 
@@ -169,7 +167,7 @@ public class WindowFrame extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException e) {
         } catch (IllegalAccessException e) {
         }
-        
+
         //Image icon = Toolkit.getDefaultToolkit().getImage("resources/cbz.png");
         Image icon = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/pdftocbz/resources/cbz.png"));
         this.setIconImage(icon);
@@ -205,23 +203,24 @@ public class WindowFrame extends javax.swing.JFrame {
     public void setDriveList(Object[] list) {
         driveComboBox.setModel(new javax.swing.DefaultComboBoxModel(list));
     }
-    
-    public MainController getController(){
+
+    public MainController getController() {
         return this.controller;
     }
-    
-    public void updateProgressing(int newValue){
+
+    public void updateProgressing(int newValue) {
         this.numberConvertedLabel.setText(Integer.toString(newValue));
     }
-    
-    public void convertIsFinish(){
+
+    public void convertIsFinish() {
 
         this.initializeSelectedList();
         this.addFileButton.setEnabled(true);
         this.fileSelectedList.setEnabled(true);
         this.cancelButton.setVisible(false);
         this.convertButton.setEnabled(true);
-        
+        this.loadingSpinner.setVisible(false);
+
     }
 
     /**
@@ -235,6 +234,7 @@ public class WindowFrame extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         fileSelectorPanel = new javax.swing.JPanel();
         jSplitPane = new javax.swing.JSplitPane();
         leftPanel = new javax.swing.JPanel();
@@ -261,6 +261,8 @@ public class WindowFrame extends javax.swing.JFrame {
         numberTotalToConvertLabel = new javax.swing.JLabel();
         labelProgressNumberLabel = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
+        loadingSpinner = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
         outputQualityLabel = new javax.swing.JLabel();
         outputQualityComboBox = new javax.swing.JComboBox();
         displaySelectedPdfPanel = new javax.swing.JPanel();
@@ -278,6 +280,17 @@ public class WindowFrame extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
@@ -320,7 +333,7 @@ public class WindowFrame extends javax.swing.JFrame {
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addComponent(driveComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileSelectorJScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                .addComponent(fileSelectorJScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
         );
 
         jSplitPane.setLeftComponent(leftPanel);
@@ -380,7 +393,7 @@ public class WindowFrame extends javax.swing.JFrame {
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(fileSelectedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+            .addComponent(fileSelectedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
             .addComponent(fileButtonsBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -469,6 +482,8 @@ public class WindowFrame extends javax.swing.JFrame {
             }
         });
 
+        loadingSpinner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdftocbz/resources/loading.gif"))); // NOI18N
+
         javax.swing.GroupLayout progressPanelLayout = new javax.swing.GroupLayout(progressPanel);
         progressPanel.setLayout(progressPanelLayout);
         progressPanelLayout.setHorizontalGroup(
@@ -476,7 +491,12 @@ public class WindowFrame extends javax.swing.JFrame {
             .addGroup(progressPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(progressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progressNumbersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(progressPanelLayout.createSequentialGroup()
+                        .addComponent(progressNumbersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loadingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(convertProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, progressPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -487,7 +507,10 @@ public class WindowFrame extends javax.swing.JFrame {
             progressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, progressPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(progressNumbersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(progressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progressNumbersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(convertProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -558,18 +581,21 @@ public class WindowFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(advancedOptionsButton))
-                    .addComponent(deletePdfAfterCheckBox)
-                    .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addComponent(outputChoiceLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(outputImagesRadio)
-                            .addComponent(outputCbzRadio)))
-                    .addComponent(deleteImagesAfterCheckBox)
                     .addGroup(menuPanelLayout.createSequentialGroup()
                         .addComponent(outputQualityLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(outputQualityComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(outputQualityComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deletePdfAfterCheckBox)
+                            .addGroup(menuPanelLayout.createSequentialGroup()
+                                .addComponent(outputChoiceLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(outputImagesRadio)
+                                    .addComponent(outputCbzRadio)))
+                            .addComponent(deleteImagesAfterCheckBox))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -627,11 +653,12 @@ public class WindowFrame extends javax.swing.JFrame {
     private void convertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertButtonActionPerformed
         this.updateSelectedList();
         this.updateSettings();
-        
-        if(this.selectedFilesManager.getList().size()>0){
+
+        if (this.selectedFilesManager.getList().size() > 0) {
             this.controller.launchConverter(this.convertProgressBar);
             this.cancelButton.setVisible(true);
             this.progressPanel.setVisible(true);
+            this.loadingSpinner.setVisible(true);
             this.fileSelectedList.setEnabled(false);
             this.addFileButton.setEnabled(false);
             this.convertButton.setEnabled(false);
@@ -661,7 +688,6 @@ public class WindowFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addFileButtonActionPerformed
 
     private void driveComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driveComboBoxActionPerformed
-        // TODO add your handling code here:
         JComboBox cb = (JComboBox) evt.getSource();
         File root = (File) cb.getSelectedItem();
         this.setTreeFile(new FileSystemTreeModel(root));
@@ -677,29 +703,26 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             this.fileSelectedList.clearSelection();
         }
-        
+
         this.updateSelectedList();
     }//GEN-LAST:event_fileSelectedListKeyReleased
 
     private void advancedOptionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedOptionsButtonActionPerformed
-        // TODO add your handling code here:
         this.advancedOptionsFrame = new AdvancedOptionsFrame(this, true);
     }//GEN-LAST:event_advancedOptionsButtonActionPerformed
 
     private void outputImagesRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputImagesRadioActionPerformed
-        // TODO add your handling code here:
         this.deleteImagesAfterCheckBox.setSelected(false);
         this.deleteImagesAfterCheckBox.setEnabled(false);
     }//GEN-LAST:event_outputImagesRadioActionPerformed
 
     private void outputCbzRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputCbzRadioActionPerformed
-        // TODO add your handling code here:
         this.deleteImagesAfterCheckBox.setEnabled(true);
     }//GEN-LAST:event_outputCbzRadioActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
         System.out.println("Cancel called");
+        // TODO
         this.convertProgressBar.firePropertyChange("cancel", false, true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
@@ -721,11 +744,14 @@ public class WindowFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane fileSelectorJScrollPane;
     private javax.swing.JTree fileSelectorJTree;
     private javax.swing.JPanel fileSelectorPanel;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JLabel labelPdfSelectedLabel;
     private javax.swing.JLabel labelProgressNumberLabel;
     private javax.swing.JPanel leftPanel;
+    private javax.swing.JLabel loadingSpinner;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel numberConvertedLabel;
     private javax.swing.JLabel numberPdfSelectedLabel;
